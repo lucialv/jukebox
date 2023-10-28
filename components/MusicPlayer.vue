@@ -80,7 +80,7 @@ const getRandomColor = () => {
 
 const playSong = (song) => {
 	currentSong.value = song;
-	audioPlayer.value.src = `/songs/${song.filename}`;
+	audioPlayer.value.src = `/songs	song.filename}`;
 
 	// Forzar la carga del audio antes de reproducirlo
 	audioPlayer.value.load();
