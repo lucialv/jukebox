@@ -72,7 +72,7 @@ export default defineNuxtConfig({
 				{ property: 'og:title', content: 'Lucía Jukebox' },
 				{ property: 'og:type', content: 'website' },
 				{ property: 'og:url', content: 'https://jukebox.mishu.dev' },
-				{ property: 'og:image', content: '/catboxx.webp' },
+				{ property: 'og:image', content: '/metaimage.png' },
 				{ property: 'twitter:card', content: 'summary_large_image' },
 				{ property: 'twitter:creator', content: '@lucialv' },
 				{ property: 'twitter:site', content: '@lucialv' },
