@@ -24,7 +24,7 @@ export default defineNuxtConfig({
 				{ name: 'audience', content: 'all' },
 				{ name: 'author', content: 'Lucía Álvarez, mishudiscord@gmail.com' },
 				{ name: 'coverage', content: 'Worldwide' },
-				{ name: 'theme-color', content: '#C4EEFF' },
+				{ name: 'theme-color', content: '#F7FEE7' },
 				{
 					name: 'description',
 					content: 'Lucía JukeBoxo'
@@ -43,7 +43,7 @@ export default defineNuxtConfig({
 					content: 'mishu, Lucía Álvarez Portfolio, Lucía Álvarez, Lucía Portfolio, mishu portfolio'
 				},
 				{ name: 'msapplication-config', content: '/browserconfig.xml' },
-				{ name: 'msapplication-TileColor', content: '#C4EEFF' },
+				{ name: 'msapplication-TileColor', content: '#F7FEE7' },
 				{ name: 'owner', content: 'Lucía Álvarez, mishudiscord@gmail.com' },
 				{ name: 'rating', content: 'safe for kids' },
 				{ name: 'reply-to', content: 'mishudiscord@gmail.com' },
@@ -55,16 +55,16 @@ export default defineNuxtConfig({
 				{ name: 'shortlink', content: 'https://jukebox.mishu.dev' },
 				{
 					name: 'subject',
-					content: 'Lucía JukeBoxo'
+					content: 'Lucía JukeBox'
 				},
 				{
 					name: 'summary',
-					content: 'Lucía JukeBoxo.'
+					content: 'Lucía JukeBox.'
 				},
 				{ name: 'url', content: 'https://jukebox.mishu.dev' },
 				{
 					property: 'og:description',
-					content: 'Lucía JukeBoxo'
+					content: 'Lucía JukeBox'
 				},
 				{ property: 'og:email', content: 'mishudiscord@gmail.com' },
 				{ property: 'og:locale', content: 'en_US' },
@@ -72,7 +72,14 @@ export default defineNuxtConfig({
 				{ property: 'og:title', content: 'Lucía Jukebox' },
 				{ property: 'og:type', content: 'website' },
 				{ property: 'og:url', content: 'https://jukebox.mishu.dev' },
-				{ property: 'og:image', content: '/catboxx.webp' }
+				{ property: 'og:image', content: '/catboxx.webp' },
+				{ property: 'twitter:card', content: 'summary_large_image' },
+				{ property: 'twitter:creator', content: '@lucialv' },
+				{ property: 'twitter:site', content: '@lucialv' },
+				{ property: 'twitter:title', content: 'Lucía Jukebox' },
+				{ property: 'twitter:url', content: 'https://jukebox.mishu.dev' },
+				{ property: 'twitter:image', content: '/metaimage.png' },
+				{ property: 'twitter:description', content: 'Lucía JukeBox' }
 			]
 		}
 	}
