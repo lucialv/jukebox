@@ -8,7 +8,7 @@
 			}"
 		></div>
 		<div
-			class="absolute inset-x-0 top-0 z-10 h-[500px] rounded-t-full animate-[pulse_0.8s_cubic-bezier(0.4,_0,_0.6,_1)_infinite]  "
+			class="absolute inset-x-0 top-0 z-10 h-[500px] animate-[pulse_0.8s_cubic-bezier(0.4,_0,_0.6,_1)_infinite] rounded-t-full"
 			:style="{
 				backgroundColor: currentSong.color
 			}"
@@ -35,8 +35,10 @@
 				</button>
 
 				<div class="text-center">
-					<p class="text-2xl font-semibold text-brown-100">{{ currentSong.title }}</p>
-					<p class="text-lg font-medium text-brown-200">{{ currentSong.author }}</p>
+					<button @click="tooglePausePlay()">
+						<p class="text-2xl font-semibold text-brown-100">{{ currentSong.title }}</p>
+						<p class="text-lg font-medium text-brown-200">{{ currentSong.author }}</p>
+					</button>
 				</div>
 
 				<button @click="changeSong(1)">
@@ -55,7 +57,7 @@
 
 			<!-- Inter gradient -->
 			<div
-				class="w-full flex-1 rounded-b-full  animate-[pulse_0.8s_cubic-bezier(0.4,_0,_0.6,_1)_infinite]"
+				class="w-full flex-1 animate-[pulse_0.8s_cubic-bezier(0.4,_0,_0.6,_1)_infinite] rounded-b-full"
 				:style="{
 					backgroundColor: currentSong.color
 				}"
@@ -75,7 +77,11 @@ const ElmAudioPlayer = ref(null);
 onMounted(() => {
 	// Crear elm audioplayer
 	if (!ElmAudioPlayer.value) {
-		ElmAudioPlayer.value = document.createElement('audio');
+		const Audio = document.createElement('audio');
+		Audio.addEventListener('ended', () => {
+			changeSong(1);
+		});
+		ElmAudioPlayer.value = Audio;
 	}
 
 	// Cargar/seleccionar canciones
@@ -92,7 +98,7 @@ onMounted(() => {
 	});
 
 	songs.value = songsData;
-	playSong(songsData[0])
+	playSong(songsData[0]);
 });
 
 // Handlers
@@ -106,7 +112,7 @@ const changeSong = (skip = 1) => {
 };
 
 const playSong = (song) => {
-  console.log(ElmAudioPlayer.value)
+	console.log(ElmAudioPlayer.value);
 	if (!ElmAudioPlayer.value) {
 		return;
 	}
@@ -119,5 +125,17 @@ const playSong = (song) => {
 	ElmAudioPlayer.value.addEventListener('canplay', () => {
 		ElmAudioPlayer.value.play();
 	});
+};
+
+const tooglePausePlay = () => {
+	if (!ElmAudioPlayer.value) {
+		return;
+	}
+
+	if (ElmAudioPlayer.value.paused) {
+		ElmAudioPlayer.value.play();
+	} else {
+		ElmAudioPlayer.value.pause();
+	}
 };
 </script>
