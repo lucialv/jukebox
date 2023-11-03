@@ -2,15 +2,23 @@
 	<div class="relative h-[600px] w-[400px] rounded-t-full bg-brown-700 p-12 pb-0 shadow-2xl" v-if="currentSong">
 		<!-- Background gradient -->
 		<div
-			class="absolute inset-x-0 top-0 z-10 h-[500px] animate-[ping_0.8s_linear_infinite] rounded-t-full"
+			class="absolute inset-x-0 top-0 z-10 h-[500px] rounded-t-full"
 			:style="{
 				backgroundColor: currentSong.color
 			}"
+			:class="{
+				'animate-[ping_0.8s_linear_infinite]': isNotPlaying,
+				'animate-[pulse_0.4s_linear_infinite]': !isNotPlaying
+			}"
 		></div>
 		<div
-			class="absolute inset-x-0 top-0 z-10 h-[500px] animate-[pulse_0.8s_cubic-bezier(0.4,_0,_0.6,_1)_infinite] rounded-t-full"
+			class="absolute inset-x-0 top-0 z-10 h-[500px] rounded-t-full"
 			:style="{
 				backgroundColor: currentSong.color
+			}"
+			:class="{
+				'animate-[ping_0.8s_linear_infinite]': isNotPlaying,
+				'animate-[pulse_0.4s_cubic-bezier(0.4,_0,_0.6,_1)_infinite]': !isNotPlaying
 			}"
 		></div>
 
@@ -36,8 +44,8 @@
 
 				<div class="text-center">
 					<button @click="tooglePausePlay()">
-						<p class="text-2xl font-semibold text-brown-100">{{ currentSong.title }}</p>
-						<p class="text-lg font-medium text-brown-200">{{ currentSong.author }}</p>
+						<p class="text-2xl font-semibold text-brown-100">{{ displaySongName(currentSong.title) }}</p>
+						<p class="text-lg font-medium text-brown-200">{{ displaySongName(currentSong.author) }}</p>
 					</button>
 				</div>
 
@@ -57,9 +65,13 @@
 
 			<!-- Inter gradient -->
 			<div
-				class="w-full flex-1 animate-[pulse_0.8s_cubic-bezier(0.4,_0,_0.6,_1)_infinite] rounded-b-full"
+				class="w-full flex-1 rounded-b-full"
 				:style="{
 					backgroundColor: currentSong.color
+				}"
+				:class="{
+					'animate-[pulse_0.4s_linear_infinite]': isNotPlaying,
+					'animate-[pulse_0.8s_linear_infinite]': !isNotPlaying
 				}"
 			></div>
 		</div>
@@ -73,6 +85,7 @@ import getRandomColor from '../utils/getRandomColor';
 const songs = ref([]);
 const currentSong = ref(null);
 const ElmAudioPlayer = ref(null);
+const isNotPlaying = ref(false);
 
 onMounted(() => {
 	// Crear elm audioplayer
@@ -124,7 +137,12 @@ const playSong = (song) => {
 
 	ElmAudioPlayer.value.addEventListener('canplay', () => {
 		ElmAudioPlayer.value.play();
+		isNotPlaying.value = true;
 	});
+};
+
+const displaySongName = (filename) => {
+	return filename.replace(/_/g, ' ');
 };
 
 const tooglePausePlay = () => {
@@ -134,8 +152,10 @@ const tooglePausePlay = () => {
 
 	if (ElmAudioPlayer.value.paused) {
 		ElmAudioPlayer.value.play();
+		isNotPlaying.value = true;
 	} else {
 		ElmAudioPlayer.value.pause();
+		isNotPlaying.value = false;
 	}
 };
 </script>
