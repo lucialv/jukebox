@@ -3,7 +3,7 @@
 		<MusicPlayer />
 	</div> -->
 
-	<div class="min-h-[100svh] flex justify-center items-end bg-lime-50">
-		<Jackbox />
+	<div class="flex min-h-[100svh] items-end justify-center bg-lime-50">
+		<Jukebox />
 	</div>
 </template>

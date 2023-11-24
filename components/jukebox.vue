@@ -126,6 +126,7 @@ const changeSong = (skip = 1) => {
 
 const playSong = (song) => {
 	console.log(ElmAudioPlayer.value);
+	console.log(ElmAudioPlayer.value.currentTime);
 	if (!ElmAudioPlayer.value) {
 		return;
 	}
