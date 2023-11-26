@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	modules: ['@nuxtjs/tailwindcss'],
+	plugins: ['@/plugins/toast.js'],
 	app: {
 		head: {
 			title: 'Lucía JukeBox',

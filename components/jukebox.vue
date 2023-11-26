@@ -69,11 +69,9 @@
 				:style="{
 					backgroundColor: currentSong.color
 				}"
-				:class="{
-					'animate-[pulse_0.4s_linear_infinite]': isNotPlaying,
-					'animate-[pulse_0.8s_linear_infinite]': !isNotPlaying
-				}"
-			></div>
+			>
+				<Modal />
+			</div>
 		</div>
 	</div>
 </template>
@@ -95,6 +93,8 @@ onMounted(() => {
 			changeSong(1);
 		});
 		ElmAudioPlayer.value = Audio;
+		//poner la primera canción al cargar la pagina
+		ElmAudioPlayer.value.src = `/songs/Any_Song-Zico.mp3`;
 	}
 
 	// Cargar/seleccionar canciones
@@ -112,6 +112,11 @@ onMounted(() => {
 
 	songs.value = songsData;
 	playSong(songsData[0]);
+	addEventListener('keydown', (e) => {
+		if (e.code === 'Space') {
+			tooglePausePlay();
+		}
+	});
 });
 
 // Handlers
@@ -125,8 +130,8 @@ const changeSong = (skip = 1) => {
 };
 
 const playSong = (song) => {
-	console.log(ElmAudioPlayer.value);
-	console.log(ElmAudioPlayer.value.currentTime);
+	// console.log(ElmAudioPlayer.value);
+	// console.log(ElmAudioPlayer.value.currentTime);
 	if (!ElmAudioPlayer.value) {
 		return;
 	}
