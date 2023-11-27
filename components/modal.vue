@@ -1,18 +1,25 @@
 <template>
-	<button class="absolute bottom-36 right-12 rounded-full border-2 border-opacity-20 px-4 py-4 text-white" @click="showModal">
-		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
-			<path
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
-			/>
-		</svg>
+	<button @click="showModal" class="h-[100px] min-w-[250px] max-w-[250px] rounded-lg border-2 border-green-300 bg-green-100">
+		<div class="flex items-center justify-center">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				fill="none"
+				viewBox="0 0 24 24"
+				stroke-width="1.5"
+				stroke="currentColor"
+				class="h-12 w-12 text-green-300"
+			>
+				<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+			</svg>
+
+			<h1 class="ml-2 font-semibold">Subir una nueva canción</h1>
+		</div>
 	</button>
 
 	<fwb-modal v-if="isShowModal" @close="closeModal()">
 		<template #header>
 			<div class="flex items-center text-lg">
-				Upload a new Song
+				Sube una nueva canción
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="ml-2 h-6 w-6">
 					<path
 						fill-rule="evenodd"
@@ -24,30 +31,37 @@
 		</template>
 		<template #body>
 			<div class="grid gap-y-4">
-				<fwb-input v-if="!nameStatus" v-model="name" label="Name" placeholder="Name of the song" required />
-				<fwb-input v-else-if="nameStatus" v-model="name" label="Name" placeholder="Name of the song" required validation-status="error" />
-				<fwb-input v-if="!authorStatus" v-model="author" label="Author" placeholder="Author of the song" required />
+				<fwb-input v-if="!nameStatus" v-model="name" label="Nombre" placeholder="Nombre de la canción" required />
+				<fwb-input
+					v-else-if="nameStatus"
+					v-model="name"
+					label="Nombre"
+					placeholder="Nombre de la canción"
+					required
+					validation-status="error"
+				/>
+				<fwb-input v-if="!authorStatus" v-model="author" label="Autor" placeholder="Autor de la canción" required />
 				<fwb-input
 					v-else-if="authorStatus"
 					v-model="author"
-					label="Author"
+					label="Autor"
 					placeholder="Author of the song"
 					required
 					validation-status="error"
 				/>
-				<span class="block text-sm font-medium text-gray-900 dark:text-white">Song Image</span>
+				<span class="block text-sm font-medium text-gray-900 dark:text-white">Imagen de la canción</span>
 				<fwb-file-input v-model="songImage" dropzone />
-				<p class="!mt-1 text-sm text-gray-500 dark:text-gray-300">Only PNG.</p>
+				<p class="!mt-1 text-sm text-gray-500 dark:text-gray-300">Solo formato JPEG, PNG o GIF!</p>
 
-				<span class="block text-sm font-medium text-gray-900 dark:text-white">Song Audio</span>
+				<span class="block text-sm font-medium text-gray-900 dark:text-white">Audio de la canción</span>
 				<fwb-file-input v-model="songAudio" dropzone />
-				<p class="!mt-1 text-sm text-gray-500 dark:text-gray-300">Only MP3.</p>
+				<p class="!mt-1 text-sm text-gray-500 dark:text-gray-300">Solo formato MP3!</p>
 			</div>
 		</template>
 		<template #footer>
 			<div class="flex justify-between">
-				<fwb-button @click="closeModal()" color="red"> Cancel </fwb-button>
-				<fwb-button @click="UploadSong()" color="green"> Upload </fwb-button>
+				<fwb-button @click="closeModal()" color="red"> Cancelar </fwb-button>
+				<fwb-button @click="UploadSong()" color="green"> Subir </fwb-button>
 			</div>
 		</template>
 	</fwb-modal>
@@ -82,13 +96,34 @@ function showModal() {
 }
 
 function saveData() {
-	const songName = name.value;
-	const songAuthor = author.value;
+	const songName = name.value.trim();
+	const songAuthor = author.value.trim();
 	const songImageFile = songImage.value;
 	const songAudioFile = songAudio.value;
+	if (!songName && !songAuthor) {
+		nameStatus.value = true;
+		authorStatus.value = true;
+		Toast.error('Completa todos los campos!', {
+			timeout: 5000,
+			closeOnClick: true,
+			pauseOnFocusLoss: true,
+			pauseOnHover: false,
+			draggable: true,
+			draggablePercent: 0.6,
+			showCloseButtonOnHover: false,
+			hideProgressBar: false,
+			closeButton: 'button',
+			icon: true,
+			rtl: false
+		});
+		return;
+	} else {
+		nameStatus.value = false;
+		authorStatus.value = false;
+	}
 	if (!songName) {
 		nameStatus.value = true;
-		Toast.error('Complete all the fields!', {
+		Toast.error('Completa todos los campos!', {
 			timeout: 5000,
 			closeOnClick: true,
 			pauseOnFocusLoss: true,
@@ -107,7 +142,7 @@ function saveData() {
 	}
 	if (!songAuthor) {
 		authorStatus.value = true;
-		Toast.error('Complete all the fields!', {
+		Toast.error('Completa todos los campos!', {
 			timeout: 5000,
 			closeOnClick: true,
 			pauseOnFocusLoss: true,
@@ -125,7 +160,7 @@ function saveData() {
 		authorStatus.value = false;
 	}
 	if (!songImageFile || !songAudioFile) {
-		Toast.error('Complete all the fields!', {
+		Toast.error('Completa todos los campos!', {
 			timeout: 5000,
 			closeOnClick: true,
 			pauseOnFocusLoss: true,
@@ -154,8 +189,8 @@ function saveData() {
 		image: songImageFile,
 		audio: songAudioFile
 	};
-	if (!['image/png'].includes(songImageFile?.type)) {
-		Toast.error('Image must be PNG!', {
+	if (!['image/jpeg', 'image/png', 'image/gif'].includes(songImageFile?.type)) {
+		Toast.error('La imagen debe ser JPEG, PNG o GIF!', {
 			timeout: 5000,
 			closeOnClick: true,
 			pauseOnFocusLoss: true,
@@ -170,7 +205,7 @@ function saveData() {
 		});
 		return;
 	} else if (!['audio/mpeg'].includes(songAudioFile?.type)) {
-		Toast.error('Audio must be MP3!', {
+		Toast.error('El audio debe ser MP3!', {
 			timeout: 5000,
 			closeOnClick: true,
 			pauseOnFocusLoss: true,
@@ -211,5 +246,9 @@ function saveData() {
 
 function UploadSong() {
 	saveData();
+
+	setTimeout(() => {
+		location.reload();
+	}, 5000);
 }
 </script>
