@@ -112,11 +112,6 @@ onMounted(() => {
 
 	songs.value = songsData;
 	playSong(songsData[0]);
-	addEventListener('keydown', (e) => {
-		if (e.code === 'Space') {
-			tooglePausePlay();
-		}
-	});
 });
 
 // Handlers
