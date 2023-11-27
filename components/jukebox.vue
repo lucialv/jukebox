@@ -82,8 +82,12 @@
 
 				<div class="marquee-container overflow-hidden text-center">
 					<button class="min-w-[145px] max-w-[145px]" @click="tooglePausePlay()">
-						<p class="text-2xl font-semibold text-brown-100">{{ currentSong.name }}</p>
-						<p class="text-lg font-medium text-brown-200">{{ currentSong.author }}</p>
+						<p class="text-2xl font-semibold text-brown-100">
+							{{ currentSong.name.charAt(0).toUpperCase() + currentSong.name.slice(1) }}
+						</p>
+						<p class="text-lg font-medium text-brown-200">
+							{{ currentSong.author.charAt(0).toUpperCase() + currentSong.author.slice(1) }}
+						</p>
 					</button>
 				</div>
 
