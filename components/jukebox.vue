@@ -15,7 +15,7 @@
 		<template #body>
 			<div class="rounded-2xl">
 				<h1 class="mb-4 text-2xl font-bold text-white">Listado de Canciones</h1>
-				<ul class="grid grid-cols-2 gap-4 md:grid-cols-2">
+				<ul class="grid grid-cols-1 gap-4 md:grid-cols-2">
 					<li v-for="(song, index) in songList" :key="index">
 						<button
 							class="min-w-[250px] max-w-[250px] rounded-lg"
