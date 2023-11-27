@@ -7,7 +7,7 @@ export default defineNuxtPlugin(() => {
 
 	const options = {
 		transition: 'Vue-Toastification__bounce',
-		maxToasts: 20,
+		maxToasts: 3,
 		newestOnTop: true
 	};
 
