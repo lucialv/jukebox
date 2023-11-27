@@ -1,4 +1,19 @@
 <template>
+	<div>
+		<h1>Listado de Canciones</h1>
+		<ul>
+			<li v-for="(song, index) in songList" :key="index">
+				<div>
+					<img :src="song.image" alt="Song Image" style="width: 100px; height: 100px" />
+				</div>
+				<div>
+					<p>Nombre: {{ song.name }}</p>
+					<p>Autor: {{ song.author }}</p>
+					<audio controls :src="song.audio"></audio>
+				</div>
+			</li>
+		</ul>
+	</div>
 	<div class="relative h-[600px] w-[400px] rounded-t-full bg-brown-700 p-12 pb-0 shadow-2xl" v-if="currentSong">
 		<!-- Background gradient -->
 		<div
@@ -78,7 +93,44 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import getRandomColor from '../utils/getRandomColor';
+import { getStorage, ref as storageRef, listAll, getDownloadURL } from 'firebase/storage';
+import { useFirebaseStorage, useStorageFileUrl } from 'vuefire';
+
+const storage = useFirebaseStorage();
+
+const songList = ref([]);
+
+onMounted(async () => {
+	const songsRef = storageRef(storage, 'songs');
+
+	// Listar todos los elementos dentro de la carpeta "songs"
+	const folders = await listAll(songsRef);
+	console.log(folders);
+	if (folders.prefixes.length === 0) {
+		console.log('No hay elementos en la carpeta "songs"');
+	} else {
+		for (const folder of folders.prefixes) {
+			const audioFileRef = storageRef(storage, `songs/${folder.name}/audio`);
+			const imageFileRef = storageRef(storage, `songs/${folder.name}/image`);
+
+			const {
+				url: audioUrl,
+				// refresh the url if the file changes
+				refresh: audioRefresh
+			} = useStorageFileUrl(audioFileRef);
+
+			const imageUrl = await getDownloadURL(imageFileRef);
+
+			// Agrega la información necesaria a la lista
+			songList.value.push({
+				name: folder.name.split('-')[0],
+				author: folder.name.split('-')[1],
+				audio: audioUrl.value,
+				image: imageUrl
+			});
+		}
+	}
+});
 
 const songs = ref([]);
 const currentSong = ref(null);

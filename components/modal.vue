@@ -37,11 +37,11 @@
 				/>
 				<span class="block text-sm font-medium text-gray-900 dark:text-white">Song Image</span>
 				<fwb-file-input v-model="songImage" dropzone />
-				<p class="!mt-1 text-sm text-gray-500 dark:text-gray-300">PNG, JPG or WEBP (MAX. 800x400px).</p>
+				<p class="!mt-1 text-sm text-gray-500 dark:text-gray-300">Only PNG.</p>
 
 				<span class="block text-sm font-medium text-gray-900 dark:text-white">Song Audio</span>
 				<fwb-file-input v-model="songAudio" dropzone />
-				<p class="!mt-1 text-sm text-gray-500 dark:text-gray-300">MP3 or WAV.</p>
+				<p class="!mt-1 text-sm text-gray-500 dark:text-gray-300">Only MP3.</p>
 			</div>
 		</template>
 		<template #footer>
@@ -141,8 +141,8 @@ function saveData() {
 		return;
 	}
 
-	const imageUploadRef = storageRef(storage, `songs/${songName}-${songAuthor}/${songImageFile?.name}`);
-	const audioUploadRef = storageRef(storage, `songs/${songName}-${songAuthor}/${songAudioFile?.name}`);
+	const imageUploadRef = storageRef(storage, `songs/${songName}-${songAuthor}/image`);
+	const audioUploadRef = storageRef(storage, `songs/${songName}-${songAuthor}/audio`);
 
 	const { upload: uploadImage } = useStorageFile(imageUploadRef);
 	const { upload: uploadAudio } = useStorageFile(audioUploadRef);
@@ -154,8 +154,8 @@ function saveData() {
 		image: songImageFile,
 		audio: songAudioFile
 	};
-	if (!['image/png', 'image/jpeg', 'image/webp'].includes(songImageFile?.type)) {
-		Toast.error('Image must be PNG, JPG or WEBP!', {
+	if (!['image/png'].includes(songImageFile?.type)) {
+		Toast.error('Image must be PNG!', {
 			timeout: 5000,
 			closeOnClick: true,
 			pauseOnFocusLoss: true,
@@ -169,8 +169,8 @@ function saveData() {
 			rtl: false
 		});
 		return;
-	} else if (!['audio/mpeg', 'image/wav'].includes(songAudioFile?.type)) {
-		Toast.error('Audio must be MP3 or WAV!', {
+	} else if (!['audio/mpeg'].includes(songAudioFile?.type)) {
+		Toast.error('Audio must be MP3!', {
 			timeout: 5000,
 			closeOnClick: true,
 			pauseOnFocusLoss: true,
