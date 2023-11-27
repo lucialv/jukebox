@@ -141,8 +141,8 @@ function saveData() {
 		return;
 	}
 
-	const imageUploadRef = storageRef(storage, `images/${songName}-${songAuthor}/${songImageFile?.name}`);
-	const audioUploadRef = storageRef(storage, `images/${songName}-${songAuthor}/${songAudioFile?.name}`);
+	const imageUploadRef = storageRef(storage, `songs/${songName}-${songAuthor}/${songImageFile?.name}`);
+	const audioUploadRef = storageRef(storage, `songs/${songName}-${songAuthor}/${songAudioFile?.name}`);
 
 	const { upload: uploadImage } = useStorageFile(imageUploadRef);
 	const { upload: uploadAudio } = useStorageFile(audioUploadRef);
