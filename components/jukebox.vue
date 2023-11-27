@@ -1,16 +1,18 @@
 <template>
-	<div>
-		<h1>Listado de Canciones</h1>
-		<ul>
+	<div class="m-16">
+		<h1 class="mb-4 text-2xl font-bold">Listado de Canciones</h1>
+		<ul class="grid grid-cols-2 gap-4 md:grid-cols-3">
 			<li v-for="(song, index) in songList" :key="index">
-				<div>
-					<img :src="song.image" alt="Song Image" style="width: 100px; height: 100px" />
-				</div>
-				<div>
-					<p>Nombre: {{ song.name }}</p>
-					<p>Autor: {{ song.author }}</p>
+				<button class="min-w-[250px] max-w-[250px] rounded-lg bg-zinc-300">
+					<div class="flex items-center">
+						<img :src="song.image" alt="Song Image" class="h-[100px] w-[100px] rounded-lg" />
+						<p class="ml-2 inline-block">{{ song.name }} - {{ song.author }}</p>
+					</div>
+				</button>
+
+				<!-- <div>
 					<audio controls :src="song.audio"></audio>
-				</div>
+				</div> -->
 			</li>
 		</ul>
 	</div>
