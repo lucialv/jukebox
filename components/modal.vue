@@ -96,8 +96,8 @@ function showModal() {
 }
 
 function saveData() {
-	const songName = name.value.trim();
-	const songAuthor = author.value.trim();
+	const songName = name.value.trim().replace(/[\\/]/g, ' ');
+	const songAuthor = author.value.trim().replace(/[\\/]/g, ' ');
 	const songImageFile = songImage.value;
 	const songAudioFile = songAudio.value;
 	if (!songName && !songAuthor) {
